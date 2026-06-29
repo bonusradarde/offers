@@ -1,824 +1,349 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BonusRadar – WM 2026 Wettbonus</title>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTPEWWMZLD"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CTPEWWMZLD');
-  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BonusRadar – World Cup 2026 Betting Bonus</title>
+  <meta name="description" content="BonusRadar – free betting bonuses for World Cup 2026. Offers & tournament schedule. 18+ | Gambling can be addictive." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #04060f;
-      --green: #00e676;
-      --gold: #ffd700;
-      --red: #ff3d3d;
-      --fg: #f0f0f0;
-      --muted: #7a7a9a;
-      --pitch: #1a4a2e;
+    :root{
+      --bg:#04060f;
+      --fg:#f0f0f0;
+      --muted:#9aa0a6;
+      --green:#00e676;
+      --gold:#ffd700;
+      --red:#ff3d3d;
+      --card-bg: rgba(255,255,255,0.03);
+      --accent: #00c853;
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      justify-content:center;
+      padding:0.75rem;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      overflow-x: hidden;
+    /* Responsive container */
+    .page{
+      width:100%;
+      max-width:780px;
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+      position:relative;
     }
 
-    /* Stadium lights atmosphere */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 20% 0%, rgba(0,180,80,0.10) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 0%, rgba(0,120,255,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 100% 30% at 50% 100%, rgba(255,215,0,0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0.35rem 0.5rem;
+    }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:0.6rem;
+    }
+    .logo img{height:44px; width:auto; border-radius:6px;}
+    .logo-text{font-family:'Bebas Neue',sans-serif; font-size:clamp(1.1rem,3.2vw,1.6rem); letter-spacing:0.04em}
+    .logo-text span{color:var(--green)}
+
+    .wm-badge{
+      background:linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,215,0,0.04));
+      border:1px solid rgba(255,215,0,0.25);
+      color:var(--gold);
+      padding:0.28rem 0.6rem;
+      font-weight:800;
+      border-radius:999px;
+      font-size:0.78rem;
     }
 
-    /* Pitch lines subtle overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.015) 79px, rgba(255,255,255,0.015) 80px);
-      pointer-events: none;
-      z-index: 0;
+    /* Banner */
+    .wm-banner{
+      background:linear-gradient(135deg, rgba(0,80,30,0.5), rgba(0,40,80,0.45));
+      border-radius:18px;
+      padding:1rem;
+      display:flex;
+      flex-direction:column;
+      gap:0.6rem;
+      border:1px solid rgba(0,230,118,0.12);
     }
+    .wm-banner-top{display:flex;justify-content:space-between;align-items:center}
+    .wm-year{font-family:'Bebas Neue'; color:var(--green); font-size:0.95rem}
+    .wm-live{display:inline-flex;align-items:center;gap:0.4rem;color:var(--green);font-weight:800}
+    .wm-title{font-family:'Bebas Neue'; font-size:clamp(1.6rem,6vw,2.8rem); line-height:1}
+    .wm-title em{color:var(--gold); font-style:normal}
 
-    .page {
-      width: 100%;
-      max-width: 480px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 1.25rem 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── HEADER ── */
-    header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.2rem 0 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      letter-spacing: 0.04em;
-    }
-    .logo-text span { color: var(--green); }
-
-    .wm-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
-      border: 1px solid rgba(255,215,0,0.3);
-      border-radius: 999px;
-      padding: 0.3rem 0.8rem;
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    /* ── WM BANNER ── */
-    .wm-banner {
-      width: 100%;
-      margin: 1.2rem 0 0.5rem;
-      background: linear-gradient(135deg, rgba(0,80,30,0.6), rgba(0,40,80,0.6));
-      border: 1px solid rgba(0,230,118,0.2);
-      border-radius: 20px;
-      padding: 1.2rem 1.4rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .wm-banner::before {
-      content: '⚽';
-      position: absolute;
-      right: -10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 5rem;
-      opacity: 0.08;
-    }
-
-    .wm-banner-top {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .wm-year {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      color: var(--green);
-      letter-spacing: 0.1em;
-    }
-
-    .wm-live {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .wm-live::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--red);
-      border-radius: 50%;
-      animation: pulse 1.2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.6); }
-    }
-
-    .wm-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.9rem;
-      line-height: 1;
-      color: var(--fg);
-      margin-bottom: 0.5rem;
-    }
-
-    .wm-title em { font-style: normal; color: var(--gold); }
-
-    /* Flag strip */
-    .flag-strip {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      margin-top: 0.8rem;
-    }
-
-    .flag-item {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: rgba(255,255,255,0.06);
-      border-radius: 999px;
-      padding: 0.2rem 0.6rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-
-    /* ── GROUPS STRIP ── */
-    .groups-strip {
-      width: 100%;
-      margin: 0.8rem 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .groups-strip::-webkit-scrollbar { display: none; }
-
-    .groups-inner {
-      display: flex;
-      gap: 0.5rem;
-      padding-bottom: 0.2rem;
-    }
-
-    .group-pill {
-      flex-shrink: 0;
+    /* Flags (show emoji + ISO code + name) */
+    .flag-strip{display:flex;flex-wrap:wrap;gap:0.45rem}
+    .flag-item{
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 10px;
-      padding: 0.5rem 0.7rem;
-      text-align: center;
-      min-width: 70px;
+      padding:0.28rem 0.56rem;
+      border-radius:999px;
+      font-weight:600;
+      font-size:0.82rem;
+      display:inline-flex;
+      align-items:center;
+      gap:0.45rem;
     }
+    .flag-code{opacity:0.9;font-weight:800;color:var(--fg);font-size:0.88rem}
 
-    .group-label {
-      font-size: 0.6rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--green);
-      margin-bottom: 0.3rem;
+    /* Groups strip horizontally scrollable */
+    .groups-strip{overflow:auto;padding-bottom:0.25rem}
+    .groups-inner{display:flex;gap:0.6rem}
+    .group-pill{min-width:86px;padding:0.5rem;border-radius:10px;background:var(--card-bg);border:1px solid rgba(255,255,255,0.06);text-align:center}
+    .group-label{font-size:0.62rem;font-weight:800;color:var(--green);text-transform:uppercase;letter-spacing:0.08em}
+    .group-flags{font-size:1rem;margin-top:0.25rem}
+
+    /* Hero */
+    .hero{text-align:center;padding:0.8rem 0}
+    .eyebrow{color:var(--green);font-weight:800;letter-spacing:0.12em;text-transform:uppercase;font-size:0.78rem}
+    h1{font-family:'Bebas Neue';font-size:clamp(2rem,8vw,3.6rem);line-height:0.95;margin:0.35rem 0}
+    .sub{color:var(--muted);max-width:720px;margin:0 auto;font-size:1rem}
+
+    /* Timer */
+    .timer-wrap{background:var(--card-bg);border-radius:14px;padding:0.9rem;border:1px solid rgba(255,255,255,0.06)}
+    .timer-label{font-weight:800;color:var(--muted);font-size:0.85rem;margin-bottom:0.45rem}
+    .timer-blocks{display:flex;gap:0.5rem;align-items:end;justify-content:center;flex-wrap:wrap}
+    .t-block{display:flex;flex-direction:column;align-items:center}
+    .t-num{font-family:'Bebas Neue';font-size:clamp(1.4rem,6vw,2.4rem);background:rgba(0,230,118,0.05);padding:0.28rem 0.6rem;border-radius:10px;min-width:3.2rem;text-align:center}
+    .t-unit{font-size:0.66rem;color:var(--muted);font-weight:700;margin-top:0.25rem}
+
+    .timer-sub{color:var(--muted);text-align:center;margin-top:0.6rem;font-size:0.95rem}
+
+    /* Offers */
+    .offers{display:flex;flex-direction:column;gap:0.8rem}
+    .offer-card{border-radius:18px;padding:0.9rem;background:linear-gradient(145deg, rgba(255,215,0,0.04), rgba(255,215,0,0.01));border:1px solid rgba(255,215,0,0.12)}
+    .offer-card.secondary{background:linear-gradient(145deg, rgba(0,230,118,0.04), rgba(0,230,118,0.01));border:1px solid rgba(0,230,118,0.12)}
+    .offer-title{font-family:'Bebas Neue';font-size:1.4rem;color:var(--gold);margin-top:0.25rem}
+    .offer-card.secondary .offer-title{color:var(--green)}
+    .offer-desc{color:var(--muted);margin-top:0.3rem}
+    .offer-flags{display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap}
+
+    .cta-btn{
+      display:inline-block;
+      width:100%;
+      text-align:center;
+      background:linear-gradient(135deg,#ffe066,#ffd700,#ffb300);
+      color:#050509;
+      font-weight:800;
+      padding:0.9rem;
+      border-radius:12px;
+      text-decoration:none;
+      margin-top:0.8rem;
+      box-shadow:0 6px 22px rgba(0,0,0,0.25);
+      font-size:1rem;
     }
+    .cta-btn small{display:block;font-size:0.78rem;font-weight:600;opacity:0.85;margin-top:0.25rem}
 
-    .group-flags {
-      font-size: 1rem;
-      line-height: 1.3;
+    .offer-card.secondary .cta-btn{background:linear-gradient(135deg,#00e676,#00c853); color:#021007}
+    .trust-row{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;margin-top:0.6rem}
+    .trust-pill{background:rgba(255,255,255,0.03);padding:0.35rem 0.7rem;border-radius:999px;color:var(--muted);font-weight:600}
+
+    footer{color:var(--muted);text-align:center;padding:0.6rem 0;font-size:0.86rem}
+
+    /* Accessibility: visible focus */
+    :focus{outline:3px solid var(--gold);outline-offset:2px}
+
+    /* Utilities */
+    .visually-hidden{position:absolute!important;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    @media (min-width:900px){
+      .offers{flex-direction:row}
+      .offer-card{flex:1}
+      .offer-card + .offer-card{margin-left:0.6rem}
     }
-
-    /* ── HERO ── */
-    .hero { width: 100%; text-align: center; padding: 1.5rem 0 1rem; }
-
-    .eyebrow {
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.75rem;
-    }
-
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.2rem;
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-    }
-
-    h1 em { font-style: normal; color: var(--gold); }
-
-    .sub {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-
-    /* ── TIMER ── */
-    .timer-wrap {
-      width: 100%;
-      margin: 1.5rem 0;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 16px;
-      padding: 1.2rem 1rem;
-      text-align: center;
-    }
-
-    .timer-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .timer-blocks {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      align-items: flex-end;
-    }
-
-    .t-block { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
-
-    .t-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.6rem;
-      line-height: 1;
-      background: rgba(0,230,118,0.06);
-      border: 1px solid rgba(0,230,118,0.15);
-      border-radius: 10px;
-      padding: 0.2rem 0.7rem;
-      min-width: 3rem;
-      text-align: center;
-    }
-
-    .t-unit {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .t-sep {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .timer-sub { margin-top: 0.8rem; font-size: 0.8rem; color: var(--muted); }
-    .timer-sub strong { color: var(--green); }
-
-    /* ── OFFERS ── */
-    .offers { width: 100%; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
-
-    .offer-card {
-      width: 100%;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid rgba(255,215,0,0.25);
-      background: linear-gradient(145deg, rgba(255,215,0,0.07), rgba(255,215,0,0.02));
-      position: relative;
-    }
-
-    .offer-card::before {
-      content: '⚽';
-      position: absolute;
-      top: -5px;
-      right: 16px;
-      font-size: 2.5rem;
-      opacity: 0.07;
-      pointer-events: none;
-    }
-
-    .offer-card.secondary {
-      border-color: rgba(0,230,118,0.2);
-      background: linear-gradient(145deg, rgba(0,230,118,0.06), rgba(0,230,118,0.01));
-    }
-
-    .offer-top { padding: 1.4rem 1.4rem 0.8rem; }
-
-    .offer-tag {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--gold);
-      color: #0a0a0a;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      margin-bottom: 0.75rem;
-    }
-
-    .offer-card.secondary .offer-tag {
-      background: var(--green);
-      color: #050f07;
-    }
-
-    .offer-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      line-height: 1;
-      color: var(--gold);
-      margin-bottom: 0.4rem;
-    }
-
-    .offer-card.secondary .offer-title { color: var(--green); }
-
-    .offer-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
-
-    .offer-flags {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      padding: 0.8rem 1.4rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .flag {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--fg);
-      background: rgba(255,255,255,0.06);
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-    }
-
-    .cta-btn {
-      display: block;
-      width: calc(100% - 2.8rem);
-      margin: 0 1.4rem 1.4rem;
-      padding: 1.1rem;
-      border-radius: 14px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      text-align: center;
-      text-decoration: none;
-      color: #050509;
-      background: linear-gradient(135deg, #ffe066, #ffd700, #ffb300);
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 24px rgba(255,200,0,0.25);
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(255,200,0,0.4);
-    }
-
-    .cta-btn small {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      opacity: 0.65;
-      margin-top: 0.2rem;
-    }
-
-    .offer-card.secondary .cta-btn {
-      background: linear-gradient(135deg, #00e676, #00c853);
-      color: #020f05;
-      box-shadow: 0 4px 20px rgba(0,230,118,0.25);
-    }
-
-    .offer-card.secondary .cta-btn:hover {
-      box-shadow: 0 8px 28px rgba(0,230,118,0.4);
-    }
-
-    /* ── SCHEDULE STRIP ── */
-    .schedule-section {
-      width: 100%;
-      margin: 0.5rem 0 1rem;
-    }
-
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.7rem;
-      padding-left: 0.2rem;
-    }
-
-    .schedule-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-    }
-
-    .schedule-item {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 0.7rem 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .schedule-item.hot {
-      border-color: rgba(255,215,0,0.2);
-      background: rgba(255,215,0,0.04);
-    }
-
-    .schedule-date {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      color: var(--gold);
-      line-height: 1;
-      min-width: 2.2rem;
-      text-align: center;
-    }
-
-    .schedule-info { flex: 1; }
-
-    .schedule-phase {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--fg);
-      line-height: 1.2;
-    }
-
-    .schedule-sub {
-      font-size: 0.65rem;
-      color: var(--muted);
-      margin-top: 0.1rem;
-    }
-
-    /* ── TRUST ── */
-    .trust-row {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin: 0.5rem 0 1.5rem;
-    }
-
-    .trust-pill {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      margin-top: auto;
-      padding-top: 1.5rem;
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      line-height: 1.7;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      width: 100%;
-    }
-
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--fg); }
   </style>
 </head>
-
 <body>
-  <div class="page">
+  <div class="page" role="document">
 
-    <header>
-      <img src="bonusradar-logo.jpg" alt="BonusRadar Logo" style="height:3rem; width:auto; filter: drop-shadow(0 0 12px rgba(255,215,0,0.3));" onerror="this.outerHTML='<span class=\'logo-text\'>BONUS<span>RADAR</span></span>'" />
-      <div class="wm-badge">⚽ WM 2026</div>
+    <header role="banner">
+      <div class="logo" aria-hidden="false">
+        <img src="bonusradar-logo.jpg" alt="BonusRadar logo" onerror="this.style.display='none'">
+        <div class="logo-text">BONUS<span>RADAR</span></div>
+      </div>
+      <div class="wm-badge" aria-hidden="true">⚽ WORLD CUP 2026</div>
     </header>
 
-    <!-- WM BANNER -->
-    <div class="wm-banner">
-      <div class="wm-banner-top">
-        <span class="wm-year">FIFA WORLD CUP 2026</span>
-        <span class="wm-live" id="wm-live-label">COMING SOON</span>
-      </div>
-      <div class="wm-title">USA · CANADA · <em>MEXICO</em></div>
-      <div class="flag-strip">
-        <span class="flag-item">🇩🇪 Germany</span>
-        <span class="flag-item">🇪🇸 Spain</span>
-        <span class="flag-item">🇫🇷 France</span>
-        <span class="flag-item">🇧🇷 Brazil</span>
-        <span class="flag-item">🇦🇷 Argentina</span>
-        <span class="flag-item">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</span>
-        <span class="flag-item">🇵🇹 Portugal</span>
-        <span class="flag-item">+41 more</span>
-      </div>
-    </div>
-
-    <!-- GROUPS STRIP -->
-    <div class="groups-strip">
-      <div class="groups-inner">
-        <div class="group-pill"><div class="group-label">Group A</div><div class="group-flags">🇲🇽🇿🇦🇰🇷🇨🇿</div></div>
-        <div class="group-pill"><div class="group-label">Group B</div><div class="group-flags">🇨🇦🇧🇦🇶🇦🇨🇭</div></div>
-        <div class="group-pill"><div class="group-label">Group C</div><div class="group-flags">🇧🇷🇲🇦🇭🇹🏴󠁧󠁢󠁳󠁣󠁴󠁿</div></div>
-        <div class="group-pill"><div class="group-label">Group D</div><div class="group-flags">🇺🇸🇵🇾🇦🇺🇹🇷</div></div>
-        <div class="group-pill"><div class="group-label">Group E</div><div class="group-flags">🇩🇪🇨🇼🇨🇮🇪🇨</div></div>
-        <div class="group-pill"><div class="group-label">Group F</div><div class="group-flags">🇳🇱🇯🇵🇸🇪🇹🇳</div></div>
-        <div class="group-pill"><div class="group-label">Group G</div><div class="group-flags">🇧🇪🇪🇬🇮🇷🇳🇿</div></div>
-        <div class="group-pill"><div class="group-label">Group H</div><div class="group-flags">🇪🇸🇨🇻🇸🇦🇺🇾</div></div>
-        <div class="group-pill"><div class="group-label">Group I</div><div class="group-flags">🇫🇷🇸🇳🇮🇶🇳🇴</div></div>
-        <div class="group-pill"><div class="group-label">Group J</div><div class="group-flags">🇦🇷🇩🇿🇦🇹🇯🇴</div></div>
-        <div class="group-pill"><div class="group-label">Group K</div><div class="group-flags">🇵🇹🇨🇩🇺🇿🇨🇴</div></div>
-        <div class="group-pill"><div class="group-label">Group L</div><div class="group-flags">🏴󠁧󠁢󠁥󠁮󠁧󠁿🇭🇷🇬🇭🇵🇦</div></div>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <section class="hero">
-      <p class="eyebrow" id="txt-eyebrow"></p>
-      <h1 id="txt-h1"></h1>
-      <p class="sub" id="txt-sub"></p>
-    </section>
-
-    <!-- TIMER -->
-    <div class="timer-wrap">
-      <div class="timer-label" id="txt-timer-label"></div>
-      <div class="timer-blocks">
-        <div class="t-block"><div class="t-num" id="t-d">00</div><div class="t-unit" id="txt-d-unit">Days</div></div>
-        <div class="t-sep">:</div>
-        <div class="t-block"><div class="t-num" id="t-h">00</div><div class="t-unit" id="txt-h-unit">Hrs</div></div>
-        <div class="t-sep">:</div>
-        <div class="t-block"><div class="t-num" id="t-m">00</div><div class="t-unit" id="txt-m-unit">Min</div></div>
-        <div class="t-sep">:</div>
-        <div class="t-block"><div class="t-num" id="t-s">00</div><div class="t-unit" id="txt-s-unit">Sec</div></div>
-      </div>
-      <p class="timer-sub" id="txt-timer-sub"></p>
-    </div>
-
-    <!-- OFFERS -->
-    <div class="offers">
-
-      <div class="offer-card">
-        <div class="offer-top">
-          <div class="offer-tag" id="txt-tag1"></div>
-          <div class="offer-title" id="txt-title1"></div>
-          <p class="offer-desc" id="txt-desc1"></p>
+    <main role="main" aria-labelledby="hero-heading">
+      <section class="wm-banner" aria-labelledby="wm-title">
+        <div class="wm-banner-top">
+          <div class="wm-year">FIFA WORLD CUP 2026</div>
+          <div class="wm-live" id="wm-live-label" aria-live="polite" aria-atomic="true">LIVE</div>
         </div>
-        <div class="offer-flags">
-          <span class="flag">🌍 International</span>
-          <span class="flag">⚽ Sports Betting</span>
-          <span class="flag">🏆 WM 2026</span>
+        <h2 id="wm-title" class="wm-title">USA · CANADA · <em>MEXICO</em></h2>
+
+        <div class="flag-strip" aria-label="Featured teams and countries">
+          <span class="flag-item"><span class="flag-emoji">🇩🇪</span><span class="flag-code">DE</span> Germany</span>
+          <span class="flag-item"><span class="flag-emoji">🇪🇸</span><span class="flag-code">ES</span> Spain</span>
+          <span class="flag-item"><span class="flag-emoji">🇫🇷</span><span class="flag-code">FR</span> France</span>
+          <span class="flag-item"><span class="flag-emoji">🇧🇷</span><span class="flag-code">BR</span> Brazil</span>
+          <span class="flag-item"><span class="flag-emoji">🇦🇷</span><span class="flag-code">AR</span> Argentina</span>
+          <span class="flag-item"><span class="flag-emoji">🏴</span><span class="flag-code">GB-ENG</span> England</span>
+          <span class="flag-item"><span class="flag-emoji">🇵🇹</span><span class="flag-code">PT</span> Portugal</span>
+          <span class="flag-item"><span class="flag-emoji">🌐</span><span class="flag-code">+41</span> more</span>
         </div>
-        <a class="cta-btn" id="btn1"
-          href="https://record.discasinoaffiliates.com/_0dbFz-WGDJbqGbWJzh_uYWNd7ZgqdRLk/1/"
-          target="_blank" rel="noopener noreferrer"
-          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer1 INT WM'});">
-        </a>
+      </section>
+
+      <div class="groups-strip" aria-label="Group overview">
+        <div class="groups-inner" role="list">
+          <div class="group-pill" role="listitem">
+            <div class="group-label">Group A</div>
+            <div class="group-flags">🇲🇽 MX · 🇿🇦 ZA · 🇰🇷 KR · 🇨🇿 CZ</div>
+          </div>
+          <div class="group-pill" role="listitem">
+            <div class="group-label">Group B</div>
+            <div class="group-flags">🇨🇦 CA · 🇧🇦 BA · 🇶🇦 QA · 🇨🇭 CH</div>
+          </div>
+          <div class="group-pill" role="listitem">
+            <div class="group-label">Group C</div>
+            <div class="group-flags">🇧🇷 BR · 🇲🇦 MA · 🇭🇹 HT · 🏴 EN</div>
+          </div>
+          <!-- add others as needed -->
+        </div>
       </div>
 
-      <div class="offer-card secondary">
-        <div class="offer-top">
-          <div class="offer-tag" id="txt-tag2"></div>
-          <div class="offer-title" id="txt-title2"></div>
-          <p class="offer-desc" id="txt-desc2"></p>
-        </div>
-        <div class="offer-flags">
-          <span class="flag">🇩🇪 Deutschland</span>
-          <span class="flag">🇦🇹 Österreich</span>
-          <span class="flag">🇨🇭 Schweiz</span>
-          <span class="flag">🏆 WM 2026</span>
-        </div>
-        <a class="cta-btn" id="btn2"
-          href="https://yeok.pushed.click/c42dm7qc"
-          target="_blank" rel="noopener noreferrer"
-          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer2 DACH WM'});">
-        </a>
-      </div>
+      <section class="hero" aria-labelledby="hero-heading">
+        <p class="eyebrow">World Cup 2026 Betting Bonus</p>
+        <h1 id="hero-heading">BET · THE WORLD · <em>CUP FREE</em></h1>
+        <p class="sub">Get your free betting bonus for the 2026 World Cup. No BS, no catch.</p>
+      </section>
 
-    </div>
+      <section class="timer-wrap" aria-labelledby="timerHeading" role="region">
+        <div id="timerHeading" class="timer-label">Tournament ends in</div>
 
-    <!-- SCHEDULE -->
-    <div class="schedule-section">
-      <div class="section-label" id="txt-schedule-label">Tournament Schedule</div>
-      <div class="schedule-grid">
-        <div class="schedule-item hot">
-          <div class="schedule-date">11<br><span style="font-size:0.7rem">JUN</span></div>
-          <div class="schedule-info">
-            <div class="schedule-phase">Group Stage</div>
-            <div class="schedule-sub">72 matches · 48 teams</div>
+        <div class="timer-blocks" role="group" aria-label="Time remaining">
+          <div class="t-block"><div class="t-num" id="t-d" aria-live="polite">00</div><div class="t-unit">Days</div></div>
+          <div class="t-block"><div class="t-num" id="t-h" aria-live="polite">00</div><div class="t-unit">Hrs</div></div>
+          <div class="t-block"><div class="t-num" id="t-m" aria-live="polite">00</div><div class="t-unit">Min</div></div>
+          <div class="t-block"><div class="t-num" id="t-s" aria-live="polite">00</div><div class="t-unit">Sec</div></div>
+        </div>
+
+        <div class="timer-sub" id="txt-timer-sub">Claim your bonus before kick-off</div>
+      </section>
+
+      <section class="offers" aria-labelledby="offers-heading">
+        <h3 id="offers-heading" class="visually-hidden">Offers</h3>
+
+        <article class="offer-card" aria-labelledby="title1" aria-describedby="desc1">
+          <div class="offer-tag">🔥 Top Pick International</div>
+          <div id="title1" class="offer-title">200% UP TO €5,000 + 50 FREE SPINS</div>
+          <p id="desc1" class="offer-desc">Welcome bonus · No minimum deposit · Perfect for WC 2026 betting worldwide</p>
+          <div class="offer-flags" aria-hidden="true"><span>🌍 International</span> <span>⚽ Sports Betting</span> <span>🏆 WC 2026</span></div>
+          <a id="btn1" class="cta-btn" href="https://record.discasinoaffiliates.com/_0dbFz-WGDJbqGbWJzh_uYWNd7ZgqdRLk/1/" target="_blank" rel="noopener noreferrer" aria-label="Claim international World Cup bonus — opens new window">
+            Claim WC Bonus →
+            <small>Check bonus terms on the casino site</small>
+          </a>
+        </article>
+
+        <article class="offer-card secondary" aria-labelledby="title2" aria-describedby="desc2">
+          <div class="offer-tag">🇩🇪 Top Pick DACH</div>
+          <div id="title2" class="offer-title">200% UP TO €7,500</div>
+          <p id="desc2" class="offer-desc">Welcome bonus · Min. €50 · Best for DE / AT / CH</p>
+          <div class="offer-flags" aria-hidden="true"><span>🇩🇪 DE</span> <span>🇦🇹 AT</span> <span>🇨🇭 CH</span> <span>🏆 WC 2026</span></div>
+          <a id="btn2" class="cta-btn" href="https://yeok.pushed.click/c42dm7qc" target="_blank" rel="noopener noreferrer" aria-label="Claim DACH World Cup bonus — opens new window">
+            Claim WC Bonus →
+            <small>Check bonus terms on the casino site</small>
+          </a>
+        </article>
+      </section>
+
+      <section class="schedule-section" aria-labelledby="schedule-heading">
+        <h4 id="schedule-heading" class="visually-hidden">Tournament schedule</h4>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem">
+          <div class="schedule-item" style="background:var(--card-bg);padding:0.6rem;border-radius:12px">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--gold)">11 <span style="font-size:.7rem">JUN</span></div>
+            <div style="font-size:0.9rem;color:var(--fg)"><strong>Group Stage</strong><div style="color:var(--muted);font-size:0.85rem">72 matches · 48 teams</div></div>
+          </div>
+          <div class="schedule-item" style="background:var(--card-bg);padding:0.6rem;border-radius:12px">
+            <div style="font-family:'Bebas Neue';font-size:1.1rem;color:var(--gold)">28 <span style="font-size:.7rem">JUN</span></div>
+            <div style="font-size:0.9rem;color:var(--fg)"><strong>Round of 32</strong><div style="color:var(--muted);font-size:0.85rem">Knockout begins</div></div>
           </div>
         </div>
-        <div class="schedule-item hot">
-          <div class="schedule-date">28<br><span style="font-size:0.7rem">JUN</span></div>
-          <div class="schedule-info">
-            <div class="schedule-phase">Round of 32</div>
-            <div class="schedule-sub">Knockout begins</div>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">4<br><span style="font-size:0.7rem">JUL</span></div>
-          <div class="schedule-info">
-            <div class="schedule-phase">Round of 16</div>
-            <div class="schedule-sub">Big bets season</div>
-          </div>
-        </div>
-        <div class="schedule-item">
-          <div class="schedule-date">19<br><span style="font-size:0.7rem">JUL</span></div>
-          <div class="schedule-info">
-            <div class="schedule-phase">🏆 Final</div>
-            <div class="schedule-sub">Peak betting day</div>
-          </div>
-        </div>
-      </div>
+      </section>
+
+    </main>
+
+    <div class="trust-row" aria-hidden="false">
+      <div class="trust-pill">✔ Verified offer</div>
+      <div class="trust-pill">✔ Secure payment</div>
+      <div class="trust-pill">18+ only</div>
     </div>
 
-    <div class="trust-row">
-      <span class="trust-pill" id="txt-trust1"></span>
-      <span class="trust-pill" id="txt-trust2"></span>
-      <span class="trust-pill">18+ only</span>
-    </div>
-
-    <footer id="footer-text"></footer>
-
+    <footer role="contentinfo">
+      18+ | Gambling can be addictive. Play responsibly. · <a href="/imprint.html" style="color:var(--muted);text-decoration:underline">Imprint</a> · <a href="/privacy-policy.html" style="color:var(--muted);text-decoration:underline">Privacy Policy</a><br>
+      <small style="opacity:.7">* Affiliate link – we may earn a commission on sign-up</small>
+    </footer>
   </div>
 
   <script>
-    function safeGtag() {
-      try { if (typeof gtag === "function") gtag.apply(null, arguments); } catch (e) {}
-    }
+    // Simple, robust English-only timer: show LIVE and time until tournament end.
+    (function(){
+      const wmStart = new Date(2026,5,11,0,0,0);   // June 11, 2026 local
+      const wmEnd   = new Date(2026,6,19,23,59,59); // July 19, 2026 end of day
+      const pad = n => String(n).padStart(2,'0');
+      const tLabelEl = document.getElementById('timerHeading') || document.getElementById('txt-timer-label');
+      const liveEl = document.getElementById('wm-live-label');
+      const subEl = document.getElementById('txt-timer-sub');
 
-    const T = {
-      de: {
-        eyebrow: "⚽ WM 2026 Wettbonus",
-        h1: ["JETZT", "GRATIS", "WETTEN"],
-        sub: "Hol dir deinen kostenlosen Wettbonus für die Weltmeisterschaft 2026. Kein Bullshit.",
-        timerLabel: "⏱ WM 2026 startet in",
-        dUnit: "Tage", hUnit: "Std", mUnit: "Min", sUnit: "Sek",
-        timerSub: "Sichere deinen Bonus <strong>vor dem Anpfiff</strong>",
-        tag1: "🔥 Top Pick International",
-        title1: "200% BIS €5.000 + 50 FREE SPINS",
-        desc1: "Willkommensbonus · Keine Mindesteinzahlung · Perfekt für WM-Wetten weltweit",
-        btn1: "WM-Bonus sichern →", btn1sub: "Bonusbedingungen auf der Casino-Seite prüfen",
-        tag2: "🇩🇪 Top Pick DACH",
-        title2: "200% BIS ZU €7.500",
-        desc2: "Willkommensbonus · Min. €50 · Exklusiv für DE / AT / CH",
-        btn2: "WM-Bonus sichern →", btn2sub: "Bonusbedingungen auf der Casino-Seite prüfen",
-        scheduleLabel: "⚽ Turnierplan 2026",
-        trust1: "✔ Verifiziertes Angebot", trust2: "✔ Sichere Zahlung",
-        footer: `18+ | Glücksspiel kann süchtig machen. Spiele verantwortungsvoll.<br>
-          <a href="/imprint.html">Impressum</a> &nbsp;|&nbsp; <a href="/privacy-policy.html">Datenschutz</a><br>
-          <span style="font-size:0.7rem;opacity:0.5;">* Affiliate-Link – wir erhalten eine Provision bei Registrierung</span>`
-      },
-      en: {
-        eyebrow: "⚽ World Cup 2026 Betting Bonus",
-        h1: ["BET", "THE WORLD", "CUP FREE"],
-        sub: "Get your free betting bonus for the 2026 World Cup. No BS. No catch.",
-        timerLabel: "⏱ World Cup 2026 starts in",
-        dUnit: "Days", hUnit: "Hrs", mUnit: "Min", sUnit: "Sec",
-        timerSub: "Claim your bonus <strong>before kick-off</strong>",
-        tag1: "🔥 Top Pick International",
-        title1: "200% UP TO €5,000 + 50 FREE SPINS",
-        desc1: "Welcome bonus · No minimum deposit · Perfect for WC 2026 betting worldwide",
-        btn1: "Claim WC Bonus →", btn1sub: "Check bonus terms on the casino site",
-        tag2: "🇩🇪 Top Pick DACH",
-        title2: "200% UP TO €7,500",
-        desc2: "Welcome bonus · Min. €50 · Best for DE / AT / CH",
-        btn2: "Claim WC Bonus →", btn2sub: "Check bonus terms on the casino site",
-        scheduleLabel: "⚽ Tournament Schedule 2026",
-        trust1: "✔ Verified offer", trust2: "✔ Secure payment",
-        footer: `18+ | Gambling can be addictive. Play responsibly.<br>
-          <a href="/imprint.html">Imprint</a> &nbsp;|&nbsp; <a href="/privacy-policy.html">Privacy Policy</a><br>
-          <span style="font-size:0.7rem;opacity:0.5;">* Affiliate link – we earn a commission on sign-up</span>`
+      function update(){
+        const now = new Date();
+        if(now >= wmStart && now <= wmEnd){
+          // during tournament -> time until end
+          if(tLabelEl) tLabelEl.textContent = 'Tournament ends in';
+          if(liveEl){ liveEl.textContent='LIVE'; liveEl.style.color = '#00e676' }
+          let diff = Math.max(0, Math.floor((wmEnd - now)/1000));
+          const days = Math.floor(diff/86400);
+          const hours = Math.floor((diff%86400)/3600);
+          const mins = Math.floor((diff%3600)/60);
+          const secs = diff%60;
+          document.getElementById('t-d').textContent = pad(days);
+          document.getElementById('t-h').textContent = pad(hours);
+          document.getElementById('t-m').textContent = pad(mins);
+          document.getElementById('t-s').textContent = pad(secs);
+          if(subEl) subEl.innerHTML = `<strong>${days}</strong> days remaining until the final`;
+        } else if(now > wmEnd){
+          // after tournament
+          if(tLabelEl) tLabelEl.textContent = 'Tournament ended';
+          if(liveEl){ liveEl.textContent='ENDED'; liveEl.style.color = 'var(--muted)' }
+          document.getElementById('t-d').textContent = '00';
+          document.getElementById('t-h').textContent = '00';
+          document.getElementById('t-m').textContent = '00';
+          document.getElementById('t-s').textContent = '00';
+          if(subEl) subEl.textContent = 'The tournament has finished.';
+        } else {
+          // before start (unlikely given your message, but safe)
+          if(tLabelEl) tLabelEl.textContent = 'World Cup 2026 starts in';
+          if(liveEl){ liveEl.textContent='COMING SOON'; liveEl.style.color = 'var(--red)' }
+          let diff = Math.max(0, Math.floor((wmStart - now)/1000));
+          const days = Math.floor(diff/86400);
+          const hours = Math.floor((diff%86400)/3600);
+          const mins = Math.floor((diff%3600)/60);
+          const secs = diff%60;
+          document.getElementById('t-d').textContent = pad(days);
+          document.getElementById('t-h').textContent = pad(hours);
+          document.getElementById('t-m').textContent = pad(mins);
+          document.getElementById('t-s').textContent = pad(secs);
+          if(subEl) subEl.innerHTML = 'Claim your bonus <strong>before kick-off</strong>';
+        }
       }
-    };
 
-    const DACH = ['DE', 'AT', 'CH'];
-
-    async function detectLang() {
-      try {
-        const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
-        const data = await res.json();
-        return DACH.includes(data.country_code) ? 'de' : 'en';
-      } catch (e) {
-        return (navigator.language || 'en').toLowerCase().startsWith('de') ? 'de' : 'en';
-      }
-    }
-
-    function applyLang(lang) {
-      const t = T[lang];
-      document.documentElement.lang = lang;
-      document.getElementById('txt-eyebrow').textContent = t.eyebrow;
-      document.getElementById('txt-h1').innerHTML = t.h1.map((line, i) =>
-        i === t.h1.length - 1 ? `<em>${line}</em>` : `${line}<br>`
-      ).join('');
-      document.getElementById('txt-sub').textContent = t.sub;
-      document.getElementById('txt-timer-label').textContent = t.timerLabel;
-      document.getElementById('txt-d-unit').textContent = t.dUnit;
-      document.getElementById('txt-h-unit').textContent = t.hUnit;
-      document.getElementById('txt-m-unit').textContent = t.mUnit;
-      document.getElementById('txt-s-unit').textContent = t.sUnit;
-      document.getElementById('txt-timer-sub').innerHTML = t.timerSub;
-      document.getElementById('txt-tag1').textContent = t.tag1;
-      document.getElementById('txt-title1').textContent = t.title1;
-      document.getElementById('txt-desc1').textContent = t.desc1;
-      document.getElementById('btn1').innerHTML = `${t.btn1}<small>${t.btn1sub}</small>`;
-      document.getElementById('txt-tag2').textContent = t.tag2;
-      document.getElementById('txt-title2').textContent = t.title2;
-      document.getElementById('txt-desc2').textContent = t.desc2;
-      document.getElementById('btn2').innerHTML = `${t.btn2}<small>${t.btn2sub}</small>`;
-      document.getElementById('txt-schedule-label').textContent = t.scheduleLabel;
-      document.getElementById('txt-trust1').textContent = t.trust1;
-      document.getElementById('txt-trust2').textContent = t.trust2;
-      document.getElementById('footer-text').innerHTML = t.footer;
-    }
-
-    detectLang().then(applyLang);
-
-    // Countdown to WM start: June 11, 2026
-    function updateTimer() {
-      const now = new Date();
-      const wmStart = new Date('2026-06-11T00:00:00');
-      const isTournamentLive = now >= wmStart;
-
-      if (isTournamentLive) {
-        document.getElementById('wm-live-label').textContent = 'LIVE NOW';
-        document.getElementById('wm-live-label').style.color = '#00e676';
-        // Switch to midnight countdown during tournament
-        const midnight = new Date();
-        midnight.setHours(24, 0, 0, 0);
-        let diff = Math.floor((midnight - now) / 1000);
-        document.getElementById('t-d').textContent = '00';
-        document.getElementById('t-h').textContent = String(Math.floor(diff / 3600)).padStart(2, '0');
-        document.getElementById('t-m').textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-        document.getElementById('t-s').textContent = String(diff % 60).padStart(2, '0');
-      } else {
-        let diff = Math.floor((wmStart - now) / 1000);
-        if (diff < 0) diff = 0;
-        const days = Math.floor(diff / 86400);
-        const hours = Math.floor((diff % 86400) / 3600);
-        const mins = Math.floor((diff % 3600) / 60);
-        const secs = diff % 60;
-        document.getElementById('t-d').textContent = String(days).padStart(2, '0');
-        document.getElementById('t-h').textContent = String(hours).padStart(2, '0');
-        document.getElementById('t-m').textContent = String(mins).padStart(2, '0');
-        document.getElementById('t-s').textContent = String(secs).padStart(2, '0');
-      }
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 1000);
+      update();
+      setInterval(update,1000);
+    })();
   </script>
-
 </body>
 </html>
