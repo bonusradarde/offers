@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BonusRadar – Bester Wettbonus</title>
+  <title>BonusRadar – WM 2026 Wettbonus</title>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTPEWWMZLD"></script>
   <script>
@@ -18,11 +18,13 @@
 
   <style>
     :root {
-      --bg: #060810;
+      --bg: #04060f;
       --green: #00e676;
       --gold: #ffd700;
+      --red: #ff3d3d;
       --fg: #f0f0f0;
       --muted: #7a7a9a;
+      --pitch: #1a4a2e;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,13 +39,26 @@
       overflow-x: hidden;
     }
 
+    /* Stadium lights atmosphere */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(0,230,118,0.03) 60px, rgba(0,230,118,0.03) 61px),
-        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,180,80,0.12) 0%, transparent 70%);
+        radial-gradient(ellipse 60% 40% at 20% 0%, rgba(0,180,80,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 0%, rgba(0,120,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 30% at 50% 100%, rgba(255,215,0,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Pitch lines subtle overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.015) 79px, rgba(255,255,255,0.015) 80px);
       pointer-events: none;
       z-index: 0;
     }
@@ -60,131 +75,465 @@
       z-index: 1;
     }
 
+    /* ── HEADER ── */
     header {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 0 1rem;
+      padding: 1.2rem 0 1rem;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; }
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.04em;
+    }
     .logo-text span { color: var(--green); }
 
-    .live-dot {
-      display: flex; align-items: center; gap: 0.4rem;
-      font-size: 0.75rem; font-weight: 600; color: var(--green);
-      text-transform: uppercase; letter-spacing: 0.08em;
+    .wm-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
-    .live-dot::before {
-      content: ''; width: 8px; height: 8px;
-      background: var(--green); border-radius: 50%;
-      animation: pulse 1.4s ease-in-out infinite;
+
+    /* ── WM BANNER ── */
+    .wm-banner {
+      width: 100%;
+      margin: 1.2rem 0 0.5rem;
+      background: linear-gradient(135deg, rgba(0,80,30,0.6), rgba(0,40,80,0.6));
+      border: 1px solid rgba(0,230,118,0.2);
+      border-radius: 20px;
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
     }
+
+    .wm-banner::before {
+      content: '⚽';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 5rem;
+      opacity: 0.08;
+    }
+
+    .wm-banner-top {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .wm-year {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+    }
+
+    .wm-live {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .wm-live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
+      50% { opacity: 0.3; transform: scale(0.6); }
     }
 
-    .hero { width: 100%; text-align: center; padding: 2.5rem 0 1.5rem; }
+    .wm-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      line-height: 1;
+      color: var(--fg);
+      margin-bottom: 0.5rem;
+    }
+
+    .wm-title em { font-style: normal; color: var(--gold); }
+
+    /* Flag strip */
+    .flag-strip {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+
+    .flag-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    /* ── GROUPS STRIP ── */
+    .groups-strip {
+      width: 100%;
+      margin: 0.8rem 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .groups-strip::-webkit-scrollbar { display: none; }
+
+    .groups-inner {
+      display: flex;
+      gap: 0.5rem;
+      padding-bottom: 0.2rem;
+    }
+
+    .group-pill {
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.5rem 0.7rem;
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .group-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      margin-bottom: 0.3rem;
+    }
+
+    .group-flags {
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    /* ── HERO ── */
+    .hero { width: 100%; text-align: center; padding: 1.5rem 0 1rem; }
 
     .eyebrow {
-      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.75rem;
     }
 
     h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.4rem; line-height: 0.95;
-      letter-spacing: 0.02em; margin-bottom: 1rem;
+      font-size: 3.2rem;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
     }
+
     h1 em { font-style: normal; color: var(--gold); }
 
-    .sub { font-size: 1rem; color: var(--muted); line-height: 1.5; max-width: 320px; margin: 0 auto; }
+    .sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 300px;
+      margin: 0 auto;
+    }
 
+    /* ── TIMER ── */
     .timer-wrap {
-      width: 100%; margin: 1.8rem 0;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; padding: 1.2rem 1rem; text-align: center;
+      width: 100%;
+      margin: 1.5rem 0;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 1.2rem 1rem;
+      text-align: center;
     }
-    .timer-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
-    .timer-blocks { display: flex; justify-content: center; gap: 0.5rem; align-items: flex-end; }
+
+    .timer-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .timer-blocks {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+
     .t-block { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+
     .t-num {
-      font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; line-height: 1;
-      background: rgba(0,230,118,0.07); border: 1px solid rgba(0,230,118,0.15);
-      border-radius: 10px; padding: 0.2rem 0.7rem; min-width: 3.2rem; text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      line-height: 1;
+      background: rgba(0,230,118,0.06);
+      border: 1px solid rgba(0,230,118,0.15);
+      border-radius: 10px;
+      padding: 0.2rem 0.7rem;
+      min-width: 3rem;
+      text-align: center;
     }
-    .t-unit { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-    .t-sep { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--muted); margin-bottom: 0.4rem; }
+
+    .t-unit {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .t-sep {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
     .timer-sub { margin-top: 0.8rem; font-size: 0.8rem; color: var(--muted); }
     .timer-sub strong { color: var(--green); }
 
+    /* ── OFFERS ── */
     .offers { width: 100%; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
 
     .offer-card {
-      width: 100%; border-radius: 20px; overflow: hidden;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
       border: 1px solid rgba(255,215,0,0.25);
-      background: linear-gradient(145deg, rgba(255,215,0,0.06), rgba(255,215,0,0.02));
+      background: linear-gradient(145deg, rgba(255,215,0,0.07), rgba(255,215,0,0.02));
+      position: relative;
     }
+
+    .offer-card::before {
+      content: '⚽';
+      position: absolute;
+      top: -5px;
+      right: 16px;
+      font-size: 2.5rem;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
     .offer-card.secondary {
-      border-color: rgba(255,255,255,0.1);
-      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border-color: rgba(0,230,118,0.2);
+      background: linear-gradient(145deg, rgba(0,230,118,0.06), rgba(0,230,118,0.01));
     }
 
     .offer-top { padding: 1.4rem 1.4rem 0.8rem; }
 
     .offer-tag {
-      display: inline-block; font-size: 0.68rem; font-weight: 800;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      background: var(--gold); color: #0a0a0a;
-      padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.75rem;
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #0a0a0a;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
     }
-    .offer-card.secondary .offer-tag { background: rgba(255,255,255,0.15); color: var(--fg); }
 
-    .offer-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; line-height: 1; color: var(--gold); margin-bottom: 0.4rem; }
-    .offer-card.secondary .offer-title { color: var(--fg); }
+    .offer-card.secondary .offer-tag {
+      background: var(--green);
+      color: #050f07;
+    }
+
+    .offer-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .offer-card.secondary .offer-title { color: var(--green); }
 
     .offer-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
     .offer-flags {
-      display: flex; gap: 0.5rem; flex-wrap: wrap;
-      padding: 0.8rem 1.4rem; border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0.8rem 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
-    .flag { font-size: 0.75rem; font-weight: 600; color: var(--fg); background: rgba(255,255,255,0.06); padding: 0.2rem 0.6rem; border-radius: 999px; }
+
+    .flag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--fg);
+      background: rgba(255,255,255,0.06);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
 
     .cta-btn {
-      display: block; width: calc(100% - 2.8rem); margin: 0 1.4rem 1.4rem;
-      padding: 1.1rem; border-radius: 14px;
-      font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 800;
-      text-align: center; text-decoration: none; color: #050509;
+      display: block;
+      width: calc(100% - 2.8rem);
+      margin: 0 1.4rem 1.4rem;
+      padding: 1.1rem;
+      border-radius: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      color: #050509;
       background: linear-gradient(135deg, #ffe066, #ffd700, #ffb300);
       transition: transform 0.15s, box-shadow 0.15s;
       box-shadow: 0 4px 24px rgba(255,200,0,0.25);
     }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,200,0,0.4); }
-    .cta-btn small { display: block; font-size: 0.75rem; font-weight: 600; opacity: 0.7; margin-top: 0.2rem; }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,200,0,0.4);
+    }
+
+    .cta-btn small {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      opacity: 0.65;
+      margin-top: 0.2rem;
+    }
 
     .offer-card.secondary .cta-btn {
-      background: linear-gradient(135deg, #e0e0f0, #bdbdd6);
-      box-shadow: 0 4px 16px rgba(180,180,220,0.15);
+      background: linear-gradient(135deg, #00e676, #00c853);
+      color: #020f05;
+      box-shadow: 0 4px 20px rgba(0,230,118,0.25);
     }
-    .offer-card.secondary .cta-btn:hover { box-shadow: 0 8px 24px rgba(180,180,220,0.3); }
 
-    .trust-row { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0 1.5rem; }
+    .offer-card.secondary .cta-btn:hover {
+      box-shadow: 0 8px 28px rgba(0,230,118,0.4);
+    }
+
+    /* ── SCHEDULE STRIP ── */
+    .schedule-section {
+      width: 100%;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+      padding-left: 0.2rem;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .schedule-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 0.7rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .schedule-item.hot {
+      border-color: rgba(255,215,0,0.2);
+      background: rgba(255,215,0,0.04);
+    }
+
+    .schedule-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      line-height: 1;
+      min-width: 2.2rem;
+      text-align: center;
+    }
+
+    .schedule-info { flex: 1; }
+
+    .schedule-phase {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.2;
+    }
+
+    .schedule-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── TRUST ── */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 1.5rem;
+    }
+
     .trust-pill {
-      font-size: 0.78rem; font-weight: 600; color: var(--muted);
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
-      padding: 0.3rem 0.8rem; border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
     }
 
+    /* ── FOOTER ── */
     footer {
-      margin-top: auto; padding-top: 1.5rem; text-align: center;
-      font-size: 0.75rem; color: var(--muted); line-height: 1.7;
-      border-top: 1px solid rgba(255,255,255,0.05); width: 100%;
+      margin-top: auto;
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      width: 100%;
     }
+
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--fg); }
   </style>
@@ -194,31 +543,72 @@
   <div class="page">
 
     <header>
-      <img src="bonusradar-logo.jpg" alt="BonusRadar Logo" style="height:3.2rem; width:auto; filter: drop-shadow(0 0 12px rgba(255,215,0,0.3));" />
-      <div class="live-dot">Live</div>
+      <img src="bonusradar-logo.jpg" alt="BonusRadar Logo" style="height:3rem; width:auto; filter: drop-shadow(0 0 12px rgba(255,215,0,0.3));" onerror="this.outerHTML='<span class=\'logo-text\'>BONUS<span>RADAR</span></span>'" />
+      <div class="wm-badge">⚽ WM 2026</div>
     </header>
 
+    <!-- WM BANNER -->
+    <div class="wm-banner">
+      <div class="wm-banner-top">
+        <span class="wm-year">FIFA WORLD CUP 2026</span>
+        <span class="wm-live" id="wm-live-label">COMING SOON</span>
+      </div>
+      <div class="wm-title">USA · CANADA · <em>MEXICO</em></div>
+      <div class="flag-strip">
+        <span class="flag-item">🇩🇪 Germany</span>
+        <span class="flag-item">🇪🇸 Spain</span>
+        <span class="flag-item">🇫🇷 France</span>
+        <span class="flag-item">🇧🇷 Brazil</span>
+        <span class="flag-item">🇦🇷 Argentina</span>
+        <span class="flag-item">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</span>
+        <span class="flag-item">🇵🇹 Portugal</span>
+        <span class="flag-item">+41 more</span>
+      </div>
+    </div>
+
+    <!-- GROUPS STRIP -->
+    <div class="groups-strip">
+      <div class="groups-inner">
+        <div class="group-pill"><div class="group-label">Group A</div><div class="group-flags">🇲🇽🇿🇦🇰🇷🇨🇿</div></div>
+        <div class="group-pill"><div class="group-label">Group B</div><div class="group-flags">🇨🇦🇧🇦🇶🇦🇨🇭</div></div>
+        <div class="group-pill"><div class="group-label">Group C</div><div class="group-flags">🇧🇷🇲🇦🇭🇹🏴󠁧󠁢󠁳󠁣󠁴󠁿</div></div>
+        <div class="group-pill"><div class="group-label">Group D</div><div class="group-flags">🇺🇸🇵🇾🇦🇺🇹🇷</div></div>
+        <div class="group-pill"><div class="group-label">Group E</div><div class="group-flags">🇩🇪🇨🇼🇨🇮🇪🇨</div></div>
+        <div class="group-pill"><div class="group-label">Group F</div><div class="group-flags">🇳🇱🇯🇵🇸🇪🇹🇳</div></div>
+        <div class="group-pill"><div class="group-label">Group G</div><div class="group-flags">🇧🇪🇪🇬🇮🇷🇳🇿</div></div>
+        <div class="group-pill"><div class="group-label">Group H</div><div class="group-flags">🇪🇸🇨🇻🇸🇦🇺🇾</div></div>
+        <div class="group-pill"><div class="group-label">Group I</div><div class="group-flags">🇫🇷🇸🇳🇮🇶🇳🇴</div></div>
+        <div class="group-pill"><div class="group-label">Group J</div><div class="group-flags">🇦🇷🇩🇿🇦🇹🇯🇴</div></div>
+        <div class="group-pill"><div class="group-label">Group K</div><div class="group-flags">🇵🇹🇨🇩🇺🇿🇨🇴</div></div>
+        <div class="group-pill"><div class="group-label">Group L</div><div class="group-flags">🏴󠁧󠁢󠁥󠁮󠁧󠁿🇭🇷🇬🇭🇵🇦</div></div>
+      </div>
+    </div>
+
+    <!-- HERO -->
     <section class="hero">
       <p class="eyebrow" id="txt-eyebrow"></p>
       <h1 id="txt-h1"></h1>
       <p class="sub" id="txt-sub"></p>
     </section>
 
+    <!-- TIMER -->
     <div class="timer-wrap">
       <div class="timer-label" id="txt-timer-label"></div>
       <div class="timer-blocks">
-        <div class="t-block"><div class="t-num" id="t-h">00</div><div class="t-unit" id="txt-h-unit"></div></div>
+        <div class="t-block"><div class="t-num" id="t-d">00</div><div class="t-unit" id="txt-d-unit">Days</div></div>
         <div class="t-sep">:</div>
-        <div class="t-block"><div class="t-num" id="t-m">00</div><div class="t-unit" id="txt-m-unit"></div></div>
+        <div class="t-block"><div class="t-num" id="t-h">00</div><div class="t-unit" id="txt-h-unit">Hrs</div></div>
         <div class="t-sep">:</div>
-        <div class="t-block"><div class="t-num" id="t-s">00</div><div class="t-unit" id="txt-s-unit"></div></div>
+        <div class="t-block"><div class="t-num" id="t-m">00</div><div class="t-unit" id="txt-m-unit">Min</div></div>
+        <div class="t-sep">:</div>
+        <div class="t-block"><div class="t-num" id="t-s">00</div><div class="t-unit" id="txt-s-unit">Sec</div></div>
       </div>
       <p class="timer-sub" id="txt-timer-sub"></p>
     </div>
 
+    <!-- OFFERS -->
     <div class="offers">
 
-      <!-- OFFER 1: Free Spins (TOP) -->
       <div class="offer-card">
         <div class="offer-top">
           <div class="offer-tag" id="txt-tag1"></div>
@@ -228,15 +618,15 @@
         <div class="offer-flags">
           <span class="flag">🌍 International</span>
           <span class="flag">⚽ Sports Betting</span>
+          <span class="flag">🏆 WM 2026</span>
         </div>
         <a class="cta-btn" id="btn1"
           href="https://record.discasinoaffiliates.com/_0dbFz-WGDJbqGbWJzh_uYWNd7ZgqdRLk/1/"
           target="_blank" rel="noopener noreferrer"
-          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer1 INT 200% + FS'});">
+          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer1 INT WM'});">
         </a>
       </div>
 
-      <!-- OFFER 2: DACH -->
       <div class="offer-card secondary">
         <div class="offer-top">
           <div class="offer-tag" id="txt-tag2"></div>
@@ -247,14 +637,50 @@
           <span class="flag">🇩🇪 Deutschland</span>
           <span class="flag">🇦🇹 Österreich</span>
           <span class="flag">🇨🇭 Schweiz</span>
+          <span class="flag">🏆 WM 2026</span>
         </div>
         <a class="cta-btn" id="btn2"
           href="https://yeok.pushed.click/c42dm7qc"
           target="_blank" rel="noopener noreferrer"
-          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer2 DACH 200% 7500'});">
+          onclick="safeGtag('event','click',{event_category:'Offer',event_label:'Offer2 DACH WM'});">
         </a>
       </div>
 
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="schedule-section">
+      <div class="section-label" id="txt-schedule-label">Tournament Schedule</div>
+      <div class="schedule-grid">
+        <div class="schedule-item hot">
+          <div class="schedule-date">11<br><span style="font-size:0.7rem">JUN</span></div>
+          <div class="schedule-info">
+            <div class="schedule-phase">Group Stage</div>
+            <div class="schedule-sub">72 matches · 48 teams</div>
+          </div>
+        </div>
+        <div class="schedule-item hot">
+          <div class="schedule-date">28<br><span style="font-size:0.7rem">JUN</span></div>
+          <div class="schedule-info">
+            <div class="schedule-phase">Round of 32</div>
+            <div class="schedule-sub">Knockout begins</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-date">4<br><span style="font-size:0.7rem">JUL</span></div>
+          <div class="schedule-info">
+            <div class="schedule-phase">Round of 16</div>
+            <div class="schedule-sub">Big bets season</div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-date">19<br><span style="font-size:0.7rem">JUL</span></div>
+          <div class="schedule-info">
+            <div class="schedule-phase">🏆 Final</div>
+            <div class="schedule-sub">Peak betting day</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="trust-row">
@@ -274,49 +700,49 @@
 
     const T = {
       de: {
-        eyebrow: "⚽ Fußball-Wettbonus",
-        h1: ["BESTER", "BONUS", "DIESE WOCHE"],
-        sub: "Kein Bullshit. Kein Fake-Timer. Nur der aktuell beste Deal für Fußballfans.",
-        timerLabel: "⏱ Angebot läuft ab um Mitternacht",
-        hUnit: "Std", mUnit: "Min", sUnit: "Sek",
-        timerSub: "Danach wird der Bonus <strong>neu geprüft</strong>",
+        eyebrow: "⚽ WM 2026 Wettbonus",
+        h1: ["JETZT", "GRATIS", "WETTEN"],
+        sub: "Hol dir deinen kostenlosen Wettbonus für die Weltmeisterschaft 2026. Kein Bullshit.",
+        timerLabel: "⏱ WM 2026 startet in",
+        dUnit: "Tage", hUnit: "Std", mUnit: "Min", sUnit: "Sek",
+        timerSub: "Sichere deinen Bonus <strong>vor dem Anpfiff</strong>",
         tag1: "🔥 Top Pick International",
-        title1: "200% BIS ZU €5.000 + 50 FREE SPINS",
-        desc1: "Willkommensbonus · Keine Mindesteinzahlung · Ideal für Sportwetten weltweit",
-        btn1: "Bonus jetzt sichern →", btn1sub: "Bonusbedingungen auf der Casino-Seite prüfen",
-        tag2: "💎 Top Pick DACH",
+        title1: "200% BIS €5.000 + 50 FREE SPINS",
+        desc1: "Willkommensbonus · Keine Mindesteinzahlung · Perfekt für WM-Wetten weltweit",
+        btn1: "WM-Bonus sichern →", btn1sub: "Bonusbedingungen auf der Casino-Seite prüfen",
+        tag2: "🇩🇪 Top Pick DACH",
         title2: "200% BIS ZU €7.500",
-        desc2: "Willkommensbonus · Min. €50 · Speziell für DE / AT / CH",
-        btn2: "Bonus jetzt sichern →", btn2sub: "Bonusbedingungen auf der Casino-Seite prüfen",
-        trust1: "✔ Verifiziertes Angebot", trust2: "✔ Klare Konditionen",
+        desc2: "Willkommensbonus · Min. €50 · Exklusiv für DE / AT / CH",
+        btn2: "WM-Bonus sichern →", btn2sub: "Bonusbedingungen auf der Casino-Seite prüfen",
+        scheduleLabel: "⚽ Turnierplan 2026",
+        trust1: "✔ Verifiziertes Angebot", trust2: "✔ Sichere Zahlung",
         footer: `18+ | Glücksspiel kann süchtig machen. Spiele verantwortungsvoll.<br>
           <a href="/imprint.html">Impressum</a> &nbsp;|&nbsp; <a href="/privacy-policy.html">Datenschutz</a><br>
           <span style="font-size:0.7rem;opacity:0.5;">* Affiliate-Link – wir erhalten eine Provision bei Registrierung</span>`
       },
       en: {
-        eyebrow: "⚽ Football Betting Bonus",
-        h1: ["BEST", "BONUS", "THIS WEEK"],
-        sub: "No BS. No fake timer. Just the best current deal for football fans.",
-        timerLabel: "⏱ Offer expires at midnight",
-        hUnit: "Hrs", mUnit: "Min", sUnit: "Sec",
-        timerSub: "After that the bonus gets <strong>re-checked</strong>",
+        eyebrow: "⚽ World Cup 2026 Betting Bonus",
+        h1: ["BET", "THE WORLD", "CUP FREE"],
+        sub: "Get your free betting bonus for the 2026 World Cup. No BS. No catch.",
+        timerLabel: "⏱ World Cup 2026 starts in",
+        dUnit: "Days", hUnit: "Hrs", mUnit: "Min", sUnit: "Sec",
+        timerSub: "Claim your bonus <strong>before kick-off</strong>",
         tag1: "🔥 Top Pick International",
         title1: "200% UP TO €5,000 + 50 FREE SPINS",
-        desc1: "Welcome bonus · No minimum deposit · Perfect for sports betting worldwide",
-        btn1: "Claim bonus now →", btn1sub: "Check bonus terms on the casino site",
-        tag2: "💎 Top Pick DACH",
+        desc1: "Welcome bonus · No minimum deposit · Perfect for WC 2026 betting worldwide",
+        btn1: "Claim WC Bonus →", btn1sub: "Check bonus terms on the casino site",
+        tag2: "🇩🇪 Top Pick DACH",
         title2: "200% UP TO €7,500",
         desc2: "Welcome bonus · Min. €50 · Best for DE / AT / CH",
-        btn2: "Claim bonus now →", btn2sub: "Check bonus terms on the casino site",
-        trust1: "✔ Verified offer", trust2: "✔ Clear terms",
+        btn2: "Claim WC Bonus →", btn2sub: "Check bonus terms on the casino site",
+        scheduleLabel: "⚽ Tournament Schedule 2026",
+        trust1: "✔ Verified offer", trust2: "✔ Secure payment",
         footer: `18+ | Gambling can be addictive. Play responsibly.<br>
           <a href="/imprint.html">Imprint</a> &nbsp;|&nbsp; <a href="/privacy-policy.html">Privacy Policy</a><br>
           <span style="font-size:0.7rem;opacity:0.5;">* Affiliate link – we earn a commission on sign-up</span>`
       }
     };
 
-    // ── Geo-Detection via IP ──────────────────────────────────────────────────
-    // DACH countries: DE, AT, CH
     const DACH = ['DE', 'AT', 'CH'];
 
     async function detectLang() {
@@ -325,7 +751,6 @@
         const data = await res.json();
         return DACH.includes(data.country_code) ? 'de' : 'en';
       } catch (e) {
-        // Fallback: browser language if IP lookup fails
         return (navigator.language || 'en').toLowerCase().startsWith('de') ? 'de' : 'en';
       }
     }
@@ -333,13 +758,13 @@
     function applyLang(lang) {
       const t = T[lang];
       document.documentElement.lang = lang;
-
       document.getElementById('txt-eyebrow').textContent = t.eyebrow;
       document.getElementById('txt-h1').innerHTML = t.h1.map((line, i) =>
         i === t.h1.length - 1 ? `<em>${line}</em>` : `${line}<br>`
       ).join('');
       document.getElementById('txt-sub').textContent = t.sub;
       document.getElementById('txt-timer-label').textContent = t.timerLabel;
+      document.getElementById('txt-d-unit').textContent = t.dUnit;
       document.getElementById('txt-h-unit').textContent = t.hUnit;
       document.getElementById('txt-m-unit').textContent = t.mUnit;
       document.getElementById('txt-s-unit').textContent = t.sUnit;
@@ -352,25 +777,45 @@
       document.getElementById('txt-title2').textContent = t.title2;
       document.getElementById('txt-desc2').textContent = t.desc2;
       document.getElementById('btn2').innerHTML = `${t.btn2}<small>${t.btn2sub}</small>`;
+      document.getElementById('txt-schedule-label').textContent = t.scheduleLabel;
       document.getElementById('txt-trust1').textContent = t.trust1;
       document.getElementById('txt-trust2').textContent = t.trust2;
       document.getElementById('footer-text').innerHTML = t.footer;
     }
 
-    // Apply language on load
     detectLang().then(applyLang);
 
-    // ── Timer until midnight ──────────────────────────────────────────────────
+    // Countdown to WM start: June 11, 2026
     function updateTimer() {
       const now = new Date();
-      const midnight = new Date();
-      midnight.setHours(24, 0, 0, 0);
-      let diff = Math.floor((midnight - now) / 1000);
-      if (diff < 0) diff = 0;
-      document.getElementById('t-h').textContent = String(Math.floor(diff / 3600)).padStart(2, '0');
-      document.getElementById('t-m').textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-      document.getElementById('t-s').textContent = String(diff % 60).padStart(2, '0');
+      const wmStart = new Date('2026-06-11T00:00:00');
+      const isTournamentLive = now >= wmStart;
+
+      if (isTournamentLive) {
+        document.getElementById('wm-live-label').textContent = 'LIVE NOW';
+        document.getElementById('wm-live-label').style.color = '#00e676';
+        // Switch to midnight countdown during tournament
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        let diff = Math.floor((midnight - now) / 1000);
+        document.getElementById('t-d').textContent = '00';
+        document.getElementById('t-h').textContent = String(Math.floor(diff / 3600)).padStart(2, '0');
+        document.getElementById('t-m').textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+        document.getElementById('t-s').textContent = String(diff % 60).padStart(2, '0');
+      } else {
+        let diff = Math.floor((wmStart - now) / 1000);
+        if (diff < 0) diff = 0;
+        const days = Math.floor(diff / 86400);
+        const hours = Math.floor((diff % 86400) / 3600);
+        const mins = Math.floor((diff % 3600) / 60);
+        const secs = diff % 60;
+        document.getElementById('t-d').textContent = String(days).padStart(2, '0');
+        document.getElementById('t-h').textContent = String(hours).padStart(2, '0');
+        document.getElementById('t-m').textContent = String(mins).padStart(2, '0');
+        document.getElementById('t-s').textContent = String(secs).padStart(2, '0');
+      }
     }
+
     updateTimer();
     setInterval(updateTimer, 1000);
   </script>
